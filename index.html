@@ -7,6 +7,64 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <script type="module">
+  // IMPORT FIREBASE
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // YOUR FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqFBQgFeW805kRW50cUJqBYxg5lDMxmP3M",
+    authDomain: "student-id-system-1f668.firebaseapp.com",
+    projectId: "student-id-system-1f668",
+    storageBucket: "student-id-system-1f668.appspot.com",
+    messagingSenderId: "1076930946158",
+    appId: "1:1076930946158:web:3c9057ec541c9f8144f27f",
+    measurementId: "G-DNBR1YC1DC"
+  };
+
+  // START FIREBASE
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const studentsRef = collection(db, "students");
+
+  // AUTO LOAD SA TABLE
+  onSnapshot(studentsRef, (snapshot) => {
+    let total = 0;
+    const tableBody = document.querySelector("tbody"); 
+    if(!tableBody) return;
+    tableBody.innerHTML = "";
+    
+    snapshot.forEach((docSnap) => {
+      const s = docSnap.data();
+      total++;
+      tableBody.innerHTML += `
+        <tr>
+          <td><img src="${s.photo_url || ''}" width="40" height="40" style="border-radius:50%;"></td>
+          <td>${s.student_id || ''}</td>
+          <td>${s.last_name || ''}, ${s.first_name || ''}</td>
+          <td>${s.grade || ''} - ${s.section || ''}</td>
+          <td>${s.school_year || ''}</td>
+          <td>
+            <button onclick="alert('Print ID: ${docSnap.id}')">Print ID</button>
+            <button onclick="alert('Edit: ${docSnap.id}')">Edit</button>
+            <button onclick="deleteStudent('${docSnap.id}')">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+    const totalEl = document.querySelector(".card h1");
+    if(totalEl) totalEl.innerText = total;
+  });
+
+  // DELETE FUNCTION
+  window.deleteStudent = async function(id) {
+    if(confirm("Delete this student?")) {
+      await deleteDoc(doc(db, "students", id));
+    }
+  }
+
+</script>
   <header class="topbar">
     <div>
       <h1>Student ID Card System</h1>
