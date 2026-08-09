@@ -1,0 +1,40 @@
+*{box-sizing:border-box}
+:root{--primary:#1d4ed8;--dark:#0f172a;--muted:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--white:#fff;--danger:#dc2626}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+.topbar{background:var(--dark);color:#fff;padding:22px 5%}
+.topbar h1{margin:0 0 5px;font-size:24px}
+.topbar p{margin:0;color:#cbd5e1}
+.container{max-width:1250px;margin:30px auto;padding:0 18px}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:0 8px 25px rgba(15,23,42,.06)}
+.section-heading{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.section-heading h2{margin:0 0 5px}.section-heading p{margin:0;color:var(--muted)}
+button{border:0;border-radius:8px;padding:10px 15px;font-weight:700;cursor:pointer}
+.primary{background:var(--primary);color:#fff}.secondary{background:#e2e8f0;color:#0f172a}.danger{background:#fee2e2;color:#991b1b}
+.stats{display:flex;margin:22px 0}.stat{padding:16px 22px;border:1px solid var(--border);border-radius:10px;min-width:160px}.stat span{display:block;font-size:28px;font-weight:800}.stat small{color:var(--muted)}
+.toolbar{margin-bottom:15px}.toolbar input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--border);vertical-align:middle}th{background:#f8fafc;font-size:13px;color:#475569}
+.thumb{width:48px;height:58px;object-fit:cover;border-radius:5px;background:#e2e8f0}.actions{display:flex;gap:6px;flex-wrap:wrap}
+.empty{text-align:center;color:var(--muted);padding:35px}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.65);z-index:10;padding:20px;overflow:auto}.modal.show{display:flex;align-items:flex-start;justify-content:center}
+.modal-content{background:#fff;width:min(760px,100%);border-radius:14px;padding:22px;margin:30px 0}
+.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:18px}.modal-header h2{margin:0}.icon-btn{background:transparent;font-size:28px;padding:0;color:#475569}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.form-grid label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px}.form-grid .full{grid-column:1/-1}
+input,textarea{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:10px}input:focus,textarea:focus{outline:2px solid #bfdbfe;border-color:#60a5fa}
+.form-grid small{font-weight:400;color:var(--muted)}.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+.id-page{background:#e2e8f0;min-height:100vh;padding:30px}.id-toolbar{max-width:800px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center}.id-sheet{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+.id-card{width:350px;height:220px;background:#fff;border:1px solid #cbd5e1;border-radius:10px;overflow:hidden;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.1);font-size:12px}
+.id-header{height:50px;background:#0f172a;color:#fff;text-align:center;padding:8px}.school-name{font-size:16px;font-weight:800}.school-sub{font-size:9px}
+.id-front-body{display:flex;gap:12px;padding:12px}.id-photo{width:88px;height:105px;object-fit:cover;border:2px solid #0f172a;background:#e2e8f0}.id-info{flex:1}.id-info h2{font-size:16px;margin:0 0 7px}.id-info p{margin:4px 0}.label{font-weight:700}.id-footer{position:absolute;bottom:0;left:0;right:0;text-align:center;background:#f1f5f9;padding:6px;font-weight:700}
+.back-body{padding:12px}.back-body p{margin:6px 0}.signature{margin-top:18px;text-align:center}.signature-line{border-top:1px solid #334155;width:160px;margin:25px auto 4px}.qr-wrap{position:absolute;right:12px;bottom:12px}.qr-wrap img,.qr-wrap canvas{width:70px!important;height:70px!important}
+.print-only{display:none}
+
+@media(max-width:650px){.section-heading{align-items:flex-start;flex-direction:column}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.id-card{width:350px}}
+@media print{
+  @page{size:auto;margin:10mm}
+  body *{visibility:hidden}
+  .id-sheet,.id-sheet *{visibility:visible}
+  .id-sheet{position:absolute;left:0;top:0;width:100%;display:flex;gap:15mm;justify-content:flex-start}
+  .id-card{box-shadow:none;border:1px solid #000;break-inside:avoid}
+  .id-toolbar{display:none!important}
+}

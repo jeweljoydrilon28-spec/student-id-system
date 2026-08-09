@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student ID Card</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="id-page">
+  <div class="id-toolbar">
+    <button class="secondary" onclick="window.close()">Back</button>
+    <button class="primary" onclick="window.print()">Print ID</button>
+  </div>
+
+  <div class="id-sheet">
+    <article class="id-card">
+      <div class="id-header">
+        <div class="school-name" id="schoolNameFront">YOUR SCHOOL NAME</div>
+        <div class="school-sub">STUDENT IDENTIFICATION CARD</div>
+      </div>
+      <div class="id-front-body">
+        <img id="studentPhoto" class="id-photo" alt="Student Photo">
+        <div class="id-info">
+          <h2 id="studentName"></h2>
+          <p><span class="label">Student ID:</span> <span id="studentId"></span></p>
+          <p><span class="label">Grade:</span> <span id="studentGrade"></span></p>
+          <p><span class="label">Section:</span> <span id="studentSection"></span></p>
+          <p><span class="label">School Year:</span> <span id="studentYear"></span></p>
+        </div>
+      </div>
+      <div class="id-footer">VALID SCHOOL IDENTIFICATION CARD</div>
+    </article>
+
+    <article class="id-card">
+      <div class="id-header">
+        <div class="school-name">STUDENT INFORMATION</div>
+        <div class="school-sub">PLEASE RETURN IF FOUND</div>
+      </div>
+      <div class="back-body">
+        <p><span class="label">Birthday:</span> <span id="birthday"></span></p>
+        <p><span class="label">Address:</span> <span id="address"></span></p>
+        <p><span class="label">Contact:</span> <span id="contact"></span></p>
+        <p><span class="label">Adviser:</span> <span id="adviser"></span></p>
+        <div class="signature">
+          <div class="signature-line"></div>
+          Adviser / Authorized Signature
+        </div>
+      </div>
+      <div class="qr-wrap" id="qrcode"></div>
+    </article>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const students = JSON.parse(localStorage.getItem("studentIdSystem_students") || "[]");
+    const index = Number(localStorage.getItem("studentIdSystem_printIndex"));
+    const s = students[index];
+
+    if (!s) {
+      document.body.innerHTML = "<h2>No student selected.</h2><p>Go back to the dashboard and select Print ID.</p>";
+    } else {
+      const photo = document.getElementById("studentPhoto");
+      photo.src = s.photo || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='130'%3E%3Crect width='100%25' height='100%25' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='10' fill='%23647589'%3ENo Photo%3C/text%3E%3C/svg%3E";
+
+      document.getElementById("studentName").textContent = s.fullName;
+      document.getElementById("studentId").textContent = s.studentId;
+      document.getElementById("studentGrade").textContent = s.grade;
+      document.getElementById("studentSection").textContent = s.section;
+      document.getElementById("studentYear").textContent = s.schoolYear;
+      document.getElementById("birthday").textContent = s.birthday || "—";
+      document.getElementById("address").textContent = s.address || "—";
+      document.getElementById("contact").textContent = s.contact || "—";
+      document.getElementById("adviser").textContent = s.adviser || "—";
+
+      new QRCode(document.getElementById("qrcode"), {
+        text: JSON.stringify({studentId:s.studentId, name:s.fullName, schoolYear:s.schoolYear}),
+        width: 70,
+        height: 70
+      });
+    }
+  </script>
+</body>
+</html>
